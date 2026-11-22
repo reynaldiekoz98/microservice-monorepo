@@ -16,7 +16,7 @@ scripts/k3d-cluster.sh    local k3d cluster + ArgoCD (up | argocd | down)
 ## Use
 1. This repo is https://github.com/reynaldiekoz98/microservice-monorepo (if you fork or rename it, change `repoURL` in `argocd/application.yaml`).
 2. Push images to `ghcr.io/reynaldiekoz98/<service>:<git-sha>` (make the packages public, or add an imagePullSecret).
-3. Local k3d: `./scripts/k3d-cluster.sh up` (cluster + ArgoCD), then `./scripts/k3d-cluster.sh argocd` (applies the Application). `.kubeconfig` is written here and gitignored. Service repos next to this folder are built and imported locally; otherwise images come from GHCR.
+3. Local k3d: `./scripts/k3d-cluster.sh up` creates the cluster, installs ArgoCD, waits until it is ready and applies the Application (`./scripts/k3d-cluster.sh argocd` re-applies it). `.kubeconfig` is written here and gitignored. Service repos next to this folder are built and imported locally; otherwise images come from GHCR.
 4. Get the UI address: `kubectl -n demo get svc order-service`
 
 Deploy a new version by changing the `image:` tag in `apps/<svc>/deployment.yaml` and committing; ArgoCD syncs it
