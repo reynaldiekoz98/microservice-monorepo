@@ -17,7 +17,7 @@ spec:
         runAsUser: 1000
       containers:
         - name: order-service
-          image: ghcr.io/reynaldiekoz98/order-service:e0d455a
+          image: ghcr.io/reynaldiekoz98/order-service:0ad849b
           ports:
             - containerPort: 3003
           env:
