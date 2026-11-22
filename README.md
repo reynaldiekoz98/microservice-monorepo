@@ -14,7 +14,7 @@ scripts/k3d-cluster.sh    local k3d cluster + ArgoCD (up | argocd | down)
 `argocd/application.yaml` deploys all three services from `apps/`. It is applied once with kubectl; ArgoCD itself only syncs `apps/`.
 
 ## Use
-1. Push this directory to GitHub as `reynaldiekoz98/microservice-monorepo` (or change `repoURL` in `argocd/application.yaml`).
+1. This repo is https://github.com/reynaldiekoz98/microservice-monorepo (if you fork or rename it, change `repoURL` in `argocd/application.yaml`).
 2. Push images to `ghcr.io/reynaldiekoz98/<service>:<git-sha>` (make the packages public, or add an imagePullSecret).
 3. Local k3d: `./scripts/k3d-cluster.sh up` (cluster + ArgoCD), then `./scripts/k3d-cluster.sh argocd` (applies the Application). `.kubeconfig` is written here and gitignored. Service repos next to this folder are built and imported locally; otherwise images come from GHCR.
 4. Get the UI address: `kubectl -n demo get svc order-service`
