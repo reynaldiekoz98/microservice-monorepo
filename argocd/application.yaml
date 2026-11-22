@@ -1,0 +1,21 @@
+# Single ArgoCD Application: watches microservice-monorepo/apps (all three services) and keeps the cluster in sync.
+# Apply once with kubectl; after that, every change committed to the repo is deployed by ArgoCD.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: microservices
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/reynaldiekoz98/microservice-monorepo.git
+    targetRevision: main
+    path: apps
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo
+  syncPolicy:
+    automated: {prune: true, selfHeal: true}
+    syncOptions: [CreateNamespace=true]

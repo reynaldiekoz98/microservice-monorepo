@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service
+  namespace: demo
+  labels: {app: product-service}
+spec:
+  replicas: 2
+  selector:
+    matchLabels: {app: product-service}
+  template:
+    metadata:
+      labels: {app: product-service}
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+        - name: product-service
+          image: ghcr.io/reynaldiekoz98/product-service:e7c3f58
+          ports:
+            - containerPort: 3002
+          readinessProbe:
+            httpGet: {path: /health, port: 3002}
+            initialDelaySeconds: 3
+          livenessProbe:
+            httpGet: {path: /health, port: 3002}
+            initialDelaySeconds: 10
+          resources:
+            requests: {cpu: 50m, memory: 64Mi}
+            limits: {cpu: 250m, memory: 128Mi}
