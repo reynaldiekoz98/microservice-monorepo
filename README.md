@@ -99,7 +99,7 @@ curl -s http://localhost:8080/status               # versions of all three servi
 curl -s http://localhost:8080/version              # order-service only
 ```
 
-The order-service dashboard (http://localhost:8080) also shows the version on each service card. The version is the
+Every page of the order-service UI (http://localhost:8080) shows a version bar at the bottom with all three services, and the dashboard cards show it too. The version is the
 service repo's commit SHA, so `https://github.com/reynaldiekoz98/<service>/commit/<sha>` is the code that is running.
 A version of `dev` means the image was built without the build arg (a plain `docker build`).
 
