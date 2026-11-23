@@ -56,7 +56,7 @@ up() {
   for s in user product order; do
     [ -d "$SERVICES_DIR/$s-service/.git" ] || { echo "skip local build of $s-service (not found in $SERVICES_DIR)"; continue; }
     tag=$(git -C "$SERVICES_DIR/$s-service" rev-parse --short=7 HEAD)
-    docker build -q -t "$REGISTRY/$s-service:$tag" "$SERVICES_DIR/$s-service"
+    docker build -q --build-arg "GIT_SHA=$tag" -t "$REGISTRY/$s-service:$tag" "$SERVICES_DIR/$s-service"
     k3d image import "$REGISTRY/$s-service:$tag" -c "$CLUSTER"
   done
   kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f - >/dev/null

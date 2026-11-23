@@ -88,6 +88,21 @@ git revert <bump-commit-sha>
 pushes directly, so the ruleset has a **bypass for the Admin role** and the job uses a fine-grained PAT that acts as
 the repo admin. Side effect: you can also push directly to `main` as admin.
 
+### Checking which version is deployed
+
+The tag in `apps/<service>/deployment.yaml` is also the version the running service reports, because CI builds the
+image with `--build-arg GIT_SHA=<same sha>`:
+
+```bash
+kubectl -n demo get deploy -o wide                 # the IMAGES column shows the tag per service
+curl -s http://localhost:8080/status               # versions of all three services via order-service
+curl -s http://localhost:8080/version              # order-service only
+```
+
+The order-service dashboard (http://localhost:8080) also shows the version on each service card. The version is the
+service repo's commit SHA, so `https://github.com/reynaldiekoz98/<service>/commit/<sha>` is the code that is running.
+A version of `dev` means the image was built without the build arg (a plain `docker build`).
+
 ## Running locally (k3d + ArgoCD)
 
 Needs `docker`, `k3d`, `kubectl` on the host. From this folder:
