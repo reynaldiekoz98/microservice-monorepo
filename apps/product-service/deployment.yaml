@@ -17,7 +17,7 @@ spec:
         runAsUser: 1000
       containers:
         - name: product-service
-          image: ghcr.io/reynaldiekoz98/product-service:5106dde
+          image: ghcr.io/reynaldiekoz98/product-service:fb9fd25
           ports:
             - containerPort: 3002
           readinessProbe:
